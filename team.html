@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trace - រចនាសម្ព័ន្ធក្រុម Gaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&family=Battambang:wght@400;700&display=swap">
+    <style>
+        :root {
+            --primary: #0c162d;
+            --secondary: #1a2a4d;
+            --accent: #00f2fe;
+            --accent2: #4facfe;
+            --text: #e0f0ff;
+            --card-bg: rgba(16, 30, 60, 0.8);
+            --header-bg: linear-gradient(90deg, #0d2b4e, #143a70);
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hanuman', 'Battambang', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)),
+                         url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h10v10H10zM30 10h10v10H30zM50 10h10v10H50zM70 10h10v10H70zM90 10h10v10H90zM10 30h10v10H10zM30 30h10v10H30zM50 30h10v10H50zM70 30h10v10H70zM90 30h10v10H90zM10 50h10v10H10zM30 50h10v10H30zM50 50h10v10H50zM70 50h10v10H70zM90 50h10v10H90zM10 70h10v10H10zM30 70h10v10H30zM50 70h10v10H50zM70 70h10v10H70zM90 70h10v10H90z' fill='%2300f2fe' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Angkor Wat decorative elements */
+        .angkor-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .angkor-top-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+        }
+        
+        .angkor-top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+        }
+        
+        .angkor-bottom-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 24px;
+        }
+        
+        .angkor-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 24px;
+        }
+        
+        /* New Header Styles */
+        .main-header {
+            background: var(--header-bg);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0d2b4e, #00c6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
+            position: relative;
+            border: 2px solid var(--gold);
+        }
+
+        .logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .logo:after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .team-name {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent2), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 242, 254, 0.3);
+            position: relative;
+        }
+
+        .team-name:after {
+            content: "ជើងឯក";
+            position: absolute;
+            bottom: -15px;
+            right: 0;
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            color: var(--text);
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:hover {
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+        }
+
+        .nav-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(to right, var(--accent2), var(--accent));
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover:before {
+            width: 100%;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(to right, var(--accent2), var(--accent));
+            color: var(--primary);
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.8);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 35px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Page Content Styles */
+        .page-content {
+            padding: 30px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .page-title h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--accent2), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 242, 254, 0.7);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title h1:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent2), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a0c8ff;
+            max-width: 700px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(64, 156, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+        }
+        
+        .team-header {
+            padding: 20px;
+            background: var(--header-bg);
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        .team-header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+        
+        .team-header h2 {
+            font-size: 1.8rem;
+            color: var(--accent2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .team-content {
+            padding: 20px;
+        }
+        
+        .role {
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(100, 180, 255, 0.3);
+        }
+        
+        .role:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .role-title {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .role-title i {
+            color: var(--gold);
+        }
+        
+        .role-desc {
+            color: #c4d9ff;
+            line-height: 1.5;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .members-list {
+            padding-left: 25px;
+            margin-top: 10px;
+        }
+        
+        .members-list li {
+            margin-bottom: 6px;
+            position: relative;
+        }
+        
+        .members-list li:before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: -15px;
+            top: 0;
+        }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .player-role {
+            background: rgba(12, 25, 50, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .player-role:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
+        }
+        
+        .player-count {
+            display: inline-block;
+            background: var(--accent);
+            color: #0c1933;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .training-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .training-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+        
+        .training-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--accent2);
+            font-size: 1.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .schedule-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -15px;
+            padding: 0 15px;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 700px;
+        }
+        
+        .schedule-table th {
+            background: var(--header-bg);
+            color: var(--accent2);
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+        }
+        
+        .schedule-table tr:nth-child(even) {
+            background: rgba(12, 25, 50, 0.5);
+        }
+        
+        .schedule-table tr:hover {
+            background: rgba(0, 242, 254, 0.1);
+        }
+        
+        .additional-info {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .info-box h3 {
+            color: var(--accent2);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .values-list {
+            list-style: none;
+        }
+        
+        .values-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .values-list li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .contact-info a {
+            color: var(--accent);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(12, 25, 50, 0.7);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        
+        .contact-info a:hover {
+            transform: scale(1.2);
+            color: var(--accent2);
+            background: rgba(79, 172, 254, 0.2);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+        
+        .flow-chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .flow-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-step:not(:last-child):after {
+            content: "→";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        .step-circle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0d2b4e, #00c6ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+            border: 2px solid var(--gold);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            color: #8aa8d9;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(100, 180, 255, 0.2);
+            position: relative;
+        }
+        
+        footer:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+        
+        /* New Khmer Gaming Elements */
+        .khmer-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.03) 0%, transparent 20%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .khmer-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--accent2), var(--accent)) 1;
+            border-image-slice: 1;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                display: none;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                right: 0;
+                background: var(--secondary);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+                z-index: 100;
+            }
+            
+            .nav-buttons.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .page-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-step:not(:last-child):after {
+                position: static;
+                transform: none;
+                margin: 0 10px;
+            }
+            
+            .flow-chart {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .flow-step:after {
+                content: "↓" !important;
+                position: static !important;
+                display: block;
+                margin: 10px 0;
+                transform: none !important;
+            }
+            
+            .schedule-table {
+                font-size: 0.9rem;
+            }
+
+            .contact-info {
+                gap: 15px;
+            }
+            
+            .team-name:after {
+                font-size: 0.7rem;
+                bottom: -12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Khmer decorative elements -->
+    <div class="angkor-decoration">
+        <div class="angkor-top-left">អង្គរ</div>
+        <div class="angkor-top-right">វត្ត</div>
+        <div class="angkor-bottom-left">កម្ពុជា</div>
+        <div class="angkor-bottom-right">ជាតិ</div>
+    </div>
+    
+    <div class="khmer-pattern"></div>
+    <div class="khmer-border"></div>
+
+    <!-- Main Header with Navigation -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="image/1.jpg" alt="Zero Trace Logo">
+                    </div>
+                    <h1 class="team-name">ZERO TRACE</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="nav-buttons" id="navButtons">
+                    <a href="index.html" class="nav-btn">Home</a>
+                    <a href="player Id.html" class="nav-btn">Players ID</a>
+                    <a href="team.html" class="nav-btn active">Team Structure</a>
+                    <a href="Law.html" class="nav-btn">LawTeam</a>
+                    <a href="Lederteam.html" class="nav-btn">LeaderTeam</a>
+                    <a href="#contact" class="nav-btn">Contact</a>
+                </div>
+                
+                <!-- Mobile Hamburger Menu -->
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Page Content -->
+    <div class="container page-content">
+        <header class="page-title">
+            <h1><i class="fas fa-users"></i> រចនាសម្ព័ន្ធក្រុម Zero Trace</h1>
+            <p class="subtitle">រចនាសម្ព័ន្ធក្រុម Gaming ពេញលេញជាមួយឈ្មោះសមាជិកទាំងអស់ និងកាលវិភាគលំហាត់</p>
+        </header>
+        
+        <div class="team-grid">
+            <!-- Management Team -->
+            <div class="team-card">
+                <div class="team-header">
+                    <h2><i class="fas fa-chart-line"></i> ក្រុមគ្រប់គ្រង</h2>
+                </div>
+                <div class="team-content">
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-user-tie"></i> អ្នកគ្រប់គ្រងក្រុម</div>
+                        <div class="role-desc">ទទួលខុសត្រូវផ្ទាល់ចំពោះប្រតិបត្តិការទាំងអស់ គ្រប់គ្រងថវិកា និងសម្របសម្រួលការងាររវាងក្រុមរង។</div>
+                        <ul class="members-list">
+                            <li>លោក វី សុវណ្ណារិទ្ធ (V Sovannarith)</li>
+                        </ul>
+                    </div>
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-calendar-alt"></i> អ្នកសម្របសម្រួល</div>
+                        <div class="role-desc">គាំទ្រអ្នកគ្រប់គ្រងក្រុម តាមដានកាលវិភាគប្រកួត ធ្វើដំណើរ និងអន្តរកម្មជាមួយស្ថាប័នខាងក្រៅ។</div>
+                        <ul class="members-list">
+                            <li>កញ្ញា ងួន សុផារ័ត្ន (Nguon Sopharoth)</li>
+                            <li>លោក អ៉ី ឈុន (Ei Chun)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Technical Team -->
+            <div class="team-card">
+                <div class="team-header">
+                    <h2><i class="fas fa-laptop-code"></i> ក្រុមបច្ចេកទេស</h2>
+                </div>
+                <div class="team-content">
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-chalkboard-teacher"></i> អ្នកចាត់ការ</div>
+                        <div class="role-desc">កំណត់យុទ្ធសាស្ត្រការលេង វិភាគការប្រកួត និងដឹកនាំការហ្វឹកហ្វឺន។</div>
+                        <ul class="members-list">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-hands-helping"></i> អ្នកចាត់ការជំនួយ</div>
+                        <div class="role-desc">គាំទ្រអ្នកចាត់ការសំខាន់ ផ្តោតលើការអភិវឌ្ឍសមាជិកបុគ្គល។</div>
+                        <ul class="members-list">
+                            <li>លោក ម៉ៅ ចិន្តា (Mao Chenda)</li>
+                        </ul>
+                    </div>
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-chart-bar"></i> អ្នកវិភាគ</div>
+                        <div class="role-desc">ស្រាវជ្រាវយុទ្ធសាស្ត្រក្រុមបរក្ខ វិភាគទិន្នន័យហ្គេម និងរៀបចំរបាយការណ៍។</div>
+                        <ul class="members-list">
+                            <li>លោក អ៉ី ឈុន (Ei Choun)</li>
+                            <li>លោក សុខ រក្សារ(Sok Reaksa)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Team -->
+            <div class="team-card">
+                <div class="team-header">
+                    <h2><i class="fas fa-briefcase"></i> ក្រុមអាជីវកម្ម</h2>
+                </div>
+                <div class="team-content">
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-handshake"></i> អ្នកគ្រប់គ្រងអាជីវកម្ម</div>
+                        <div class="role-desc">ស្វែងរកអ្នកឧបត្ថម្ភ ចរចាកិច្ចសន្យា និងគ្រប់គ្រងទំនាក់ទំនងដៃគូ។</div>
+                        <ul class="members-list">
+                            <li>លោក វី សុវណ្ណារិទ្ធ (V Sovannarith)</li>
+                        </ul>
+                    </div>
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-tshirt"></i> អ្នកគ្រប់គ្រងផលិតផល</div>
+                        <div class="role-desc">រៀបចំការរចនា ផលិតកម្ម និងចែកចាយផលិតផលក្រុម (អាវ, គ្រឿងអលង្ការ)។</div>
+                        <ul class="members-list">
+                            <li>លោក អ៉ី ឈុន (Ei Choun)</li>
+                            <li>អ្នកស្រី ឡី សុខហេង (Ly Sokheng)</li>
+                        </ul>
+                    </div>
+                    <div class="role">
+                        <div class="role-title"><i class="fas fa-hashtag"></i> អ្នកគ្រប់គ្រងប្រព័ន្ធផ្សព្វផ្សាយ</div>
+                        <div class="role-desc">គ្រប់គ្រងបណ្តាញសង្គម (Facebook, Twitter, TikTok) ថតវីដេអូប្រកួត និងបង្កើតមាតិកាប្រចាំសប្តាហ៍។</div>
+                        <ul class="members-list">
+                            <li>កញ្ញា ងួន សុផារ័ត្ន (Nguon Sopharoth)</li>
+                            <li>កញ្ញា ចាន់ សុទីណា (Chan Sotina)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Players Team -->
+        <div class="team-card">
+            <div class="team-header">
+                <h2><i class="fas fa-gamepad"></i> ក្រុមអ្នកលេង</h2>
+            </div>
+            <div class="team-content">
+                <div class="players-grid">
+                    <div class="player-role">
+                        <div class="role-title"><i class="fas fa-crown"></i> អ្នកដឹកនាំក្រុម</div>
+                        <div class="role-desc">ដឹកនាំក្រុមក្នុងពេលប្រកួត ប្រាស្រ័យទាក់ទងជាមួយអ្នកចាត់ការ និងជាតំណាងសមាជិក។</div>
+                        <div class="player-count">១ នាក់</div>
+                        <ul class="members-list">
+                            <li>លោក សំ សុណា (Sam Sona) - Team Captain</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="player-role">
+                        <div class="role-title"><i class="fas fa-star"></i> អ្នកលេងសកម្ម</div>
+                        <div class="role-desc">ចូលរួមប្រកួតជាក្រុមពេញលេញតាមទីតាំង៖</div>
+                        <div class="player-count">៥ នាក់</div>
+                        <ul class="members-list">
+                            <li>លោក មុំ វិឡា (Mom Vila) - Gold Lane</li>
+                            <li>លោក រិន ប៉ុនរ៉ុង (Rin Bunrong) - Jungle</li>
+                            <li>លោក ម៉ាន់ វាសនា (Man Veasna) - Mid Lane</li>
+                            <li>លោក អូន យៀន (Oun Yean) - Exp Lane</li>
+                            <li>លោក សំ សុណា (Sam Sona) - Tank</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="player-role">
+                        <div class="role-title"><i class="fas fa-exchange-alt"></i> អ្នកជំនួស</div>
+                        <div class="role-desc">ជំនួសអ្នកលេងសកម្មពេលចាំបាច់ ហើយចូលរួមការហ្វឹកហ្វឺន។</div>
+                        <div class="player-count">២ នាក់</div>
+                        <ul class="members-list">
+                            <li>លោក មិន សុផាន់ (Min Chansophan) - Gold Land</li>
+                           
+                            <li>លោក អ៊ូច សុណាន់ (Ouch Sonann) - Jungle</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="player-role">
+                        <div class="role-title"><i class="fas fa-user-graduate"></i> អ្នកលេងហ្វឹកហ្វឺន</div>
+                        <div class="role-desc">សមាជិកថ្មីដែលកំពុងអភិវឌ្ឍសមត្ថភាព។</div>
+                        <div class="player-count">0 នាក់</div>
+                        <ul class="members-list">
+                            <li>មិនទាន់មាន (No member)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Training Schedule -->
+        <div class="training-section">
+            <h2><i class="fas fa-calendar-check"></i> កាលវិភាគលំហាត់ប្រចាំសប្តាហ៍</h2>
+            
+            <div class="schedule-table-wrapper">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>ថ្ងៃ</th>
+                            <th>ពេលវេលា</th>
+                            <th>ប្រភេទលំហាត់</th>
+                            <th>ទីតាំង</th>
+                            <th>អ្នកទទួលខុសត្រូវ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ច័ន្ទ</td>
+                            <td>18:00 - 21:00</td>
+                            <td>លំហាត់បុគ្គល</td>
+                            <td>Online</td>
+                            <td>អ្នកចាត់ការជំនួយ</td>
+                        </tr>
+                        <tr>
+                            <td>អង្គារ</td>
+                            <td>18:00 - 22:00</td>
+                            <td>ការវិភាគយុទ្ធសាស្ត្រ</td>
+                            <td>មជ្ឈមណ្ឌលលំហាត់</td>
+                            <td>អ្នកចាត់ការ</td>
+                        </tr>
+                        <tr>
+                            <td>ពុធ</td>
+                            <td>18:00 - 22:00</td>
+                            <td>លំហាត់ក្រុម</td>
+                            <td>មជ្ឈមណ្ឌលលំហាត់</td>
+                            <td>អ្នកចាត់ការ</td>
+                        </tr>
+                        <tr>
+                            <td>ព្រហស្បតិ៍</td>
+                            <td>18:00 - 22:00</td>
+                            <td>លំហាត់ប្រកួតផ្សេងៗ</td>
+                            <td>Online</td>
+                            <td>អ្នកដឹកនាំក្រុម</td>
+                        </tr>
+                        <tr>
+                            <td>សុក្រ</td>
+                            <td>16:00 - 20:00</td>
+                            <td>វិភាគការលេង និងពិនិត្យ</td>
+                            <td>មជ្ឈមណ្ឌលលំហាត់</td>
+                            <td>អ្នកវិភាគ</td>
+                        </tr>
+                        <tr>
+                            <td>សៅរ៍</td>
+                            <td>09:00 - 12:00</td>
+                            <td>លំហាត់ប្រកួតពេញ</td>
+                            <td>មជ្ឈមណ្ឌលលំហាត់</td>
+                            <td>អ្នកចាត់ការ</td>
+                        </tr>
+                        <tr>
+                            <td>អាទិត្យ</td>
+                            <td>ថ្ងៃសម្រាក</td>
+                            <td>គ្មានលំហាត់</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Additional Information -->
+        <div class="additional-info" id="contact">
+            <div class="info-grid">
+                <div class="info-box">
+                    <h3><i class="fas fa-heart"></i> តម្លៃក្រុម</h3>
+                    <ul class="values-list">
+                        <li>ល្បឿនខ្ពស់ - ការសម្រេចចិត្តឆាប់រហ័ស និងយុទ្ធសាស្ត្រដែលរត់លឿន</li>
+                        <li>ភាពប្រាស្រ័យស្មោះត្រង់ - ទំនាក់ទំនងដោយផ្ទាល់ និងគ្មានគម្រោងកំបាំង</li>
+                        <li>ការតស៊ូ - ការប្រឹងប្រែងគ្រប់ពេល ទោះបីក្នុងស្ថានភាពលំបាកក៏ដោយ</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-chart-line"></i> ជំហានអភិវឌ្ឍន៍</h3>
+                    <div class="flow-chart">
+                        <div class="flow-step">
+                            <div class="step-circle">ហ្វឹកហ្វឺន</div>
+                            <div>អ្នកលេងថ្មី</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-circle">ជំនួស</div>
+                            <div>អ្នកលេងជំនួយ</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-circle">សកម្ម</div>
+                            <div>អ្នកលេងសកម្ម</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-id-card"></i> ទំនាក់ទំនង</h3>
+                    <div class="contact-info">
+                        <a href="mailto:contact@zerotrace-esports.org" title="អ៊ីមែល"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/share/14HbgXfNu6h/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://discord.gg/zerotrace" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="https://www.zerotrace-esports.org" target="_blank" title="គេហទំព័រ"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Zero Trace Esports Organization. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+            <p>កាលវិភាគលំហាត់អាចផ្លាស់ប្តូរបានតាមកាលបរិច្ឆេទប្រកួតប្រជែង</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle functionality
+        const hamburger = document.getElementById('hamburger');
+        const navButtons = document.getElementById('navButtons');
+        
+        hamburger.addEventListener('click', () => {
+            navButtons.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

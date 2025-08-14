@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zero Trace - MLBB Cambodia Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bayon&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a5c36;
+            --secondary: #d4af37;
+            --dark: #0d2615;
+            --light: #e9f2ec;
+            --accent: #8b0000;
+            --transition: all 0.4s ease;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Battambang', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a472a 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d2615"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%230a5c36" stroke-width="0.5" stroke-opacity="0.3"/></svg>');
+            min-height: 100vh;
+            position: relative;
+            padding-top: var(--header-height);
+            touch-action: manipulation;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M40,100 C40,60 80,40 100,40 C120,40 160,60 160,100 C160,140 120,160 100,160 C80,160 40,140 40,100 Z" fill="none" stroke="%230a5c36" stroke-width="1" stroke-opacity="0.1"/></svg>') repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(10, 28, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--secondary);
+            height: var(--header-height);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(135deg, var(--secondary) 0%, #f9e076 100%);
+            padding: 5px;
+            transition: var(--transition);
+        }
+
+        .logo-img:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        .team-name {
+            font-family: 'Bayon', sans-serif;
+            font-size: 1.6rem;
+            color: var(--secondary);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .team-name span {
+            color: var(--light);
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-family: 'Bayon', sans-serif;
+            font-size: 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            transition: var(--transition);
+            position: relative;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--secondary);
+            background: rgba(10, 92, 54, 0.3);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        /* Create Card Button */
+        .create-card-btn {
+            background: linear-gradient(135deg, var(--secondary), #b8860b);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Bayon', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .create-card-btn:hover {
+            background: linear-gradient(135deg, #f9e076, var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(13, 38, 21, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+        }
+
+        .section-title {
+            font-family: 'Bayon', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: auto;
+            min-height: calc(100vh - var(--header-height));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(10, 28, 15, 0.7), rgba(10, 28, 15, 0.7)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="%230d2615"/><path d="M0,200 Q100,100 200,200 T400,200" stroke="%230a5c36" stroke-width="2" fill="none"/></svg>');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 1.5rem;
+            z-index: 2;
+            margin-top: 1rem;
+            background: rgba(13, 38, 21, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero h1 {
+            font-family: 'Bayon', sans-serif;
+            font-size: 2.2rem;
+            color: var(--secondary);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            max-width: 100%;
+            text-align: justify;
+        }
+
+        .khmer-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="20" viewBox="0 0 100 20"><path d="M0,10 Q25,5 50,10 T100,10" stroke="%230a5c36" stroke-width="0.5" fill="none"/></svg>') repeat;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .hero-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(10, 92, 54, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-title {
+            font-family: 'Bayon', sans-serif;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+        }
+
+        /* About Team Section */
+        .about-team {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-team {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .team-history {
+            background: rgba(10, 92, 54, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .team-history h3 {
+            font-family: 'Bayon', sans-serif;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .team-history p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .achievements {
+            background: rgba(139, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .achievements h3 {
+            font-family: 'Bayon', sans-serif;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .achievements ul {
+            padding-left: 1.5rem;
+        }
+
+        .achievements li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: "★";
+            color: var(--secondary);
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Players Section */
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .player-card {
+            background: linear-gradient(145deg, rgba(13, 38, 21, 0.9), rgba(10, 28, 15, 0.9));
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: var(--transition);
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .player-img {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-img::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(13, 38, 21, 0.8) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .player-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .player-card:hover .player-photo {
+            transform: scale(1.05);
+        }
+
+        .player-info {
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .player-name {
+            font-family: 'Bayon', sans-serif;
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .player-role {
+            color: var(--light);
+            background: rgba(10, 92, 54, 0.5);
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .player-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Access Gate */
+        .access-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 15, 8, 0.97);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+        }
+
+        .gate-content {
+            background: linear-gradient(145deg, rgba(13, 38, 21, 0.95), rgba(10, 28, 15, 0.95));
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .gate-content h2 {
+            font-family: 'Bayon', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.3;
+        }
+
+        .gate-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .gate-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .access-input {
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--primary);
+            background: rgba(10, 28, 15, 0.7);
+            border-radius: 6px;
+            color: var(--light);
+            font-size: 1rem;
+            text-align: center;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .access-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .submit-btn {
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), #b8860b);
+            border: none;
+            border-radius: 6px;
+            color: var(--dark);
+            font-family: 'Bayon', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #f9e076, var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 28, 15, 0.9);
+            padding: 2rem 1rem 1.5rem;
+            border-top: 2px solid var(--secondary);
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Bayon', sans-serif;
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 0.4rem;
+        }
+
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-section p {
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(3px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(10, 92, 54, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Icons */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            min-width: 24px;
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 12px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            nav ul {
+                gap: 0.6rem;
+            }
+            
+            nav a {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background: rgba(10, 28, 15, 0.95);
+                padding: 1rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 99;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem;
+                text-align: center;
+                border-radius: 5px;
+                margin-bottom: 0.3rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .players-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .gate-content {
+                padding: 1.5rem;
+            }
+            
+            .gate-content h2 {
+                font-size: 1.6rem;
+            }
+            
+            .create-card-btn {
+                margin-left: 0.5rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .logo-img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 60px;
+            }
+            
+            .logo-img {
+                width: 42px;
+                height: 42px;
+            }
+            
+            .team-name {
+                font-size: 1.3rem;
+            }
+            
+            .team-name span {
+                font-size: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .player-name {
+                font-size: 1.2rem;
+            }
+            
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-item {
+                font-size: 0.85rem;
+            }
+            
+            .create-card-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Access Gate -->
+    <div class="access-gate">
+        <div class="gate-content">
+            <h2>ចូលចំហៀងគេហទំព័រ Zero Trace</h2>
+            <p>សូមបញ្ចូលលេខកូដចូលដើម្បីបញ្ចូលទៅកាន់គេហទំព័រក្រុមយើងខ្ញុំ</p>
+            <form class="gate-form">
+                <input type="text" class="access-input" placeholder="លេខកូដចូល..." required>
+                <button type="submit" class="submit-btn">ចូលទៅកាន់គេហទំព័រ</button>
+                <div class="error-message">លេខកូដមិនត្រឹមត្រូវ! សូមព្យាយាមម្ដងទៀត</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Website Content -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="image/1.jpg" alt="Zero Trace Logo" class="logo-img">
+                <div class="team-name">ZERO TRACE</div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="player Id.html">Player ID</a></li>
+                        <li><a href="team.html">Team </a></li>
+                        <li><a href="#contact">ទំនាក់ទំនង</a></li>
+                        <li><a href="Law.html">LawTeam</a></li>
+                        <li><a href="Lederteam.html">Lederteam</a></li>
+                        <li><a href="Id card.html" class="create-card-btn">
+                            <i class="fas fa-id-card"></i> បង្កើតកាត
+                        </a></li>
+                    </ul>
+                </nav>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="khmer-pattern"></div>
+            <div class="hero-content">
+                <h1 class="floating">ZERO TRACE MLBB CAMBODIA</h1>
+                <p>ក្រុមអ្នកលេង Mobile Legends ដែលមានសមត្ថភាពខ្ពង់ខ្ពស់ពីកម្ពុជា ដែលត្រូវបានទទួលស្គាល់ជាទូទៅថាជាក្រុមជំនាន់ថ្មីដែលមានសក្តានុពលយ៉ាងខ្លាំងក្លា។ ក្រុមយើងខ្ញុំបានចូលរួមការប្រកួតជាច្រើននៅក្នុងប្រទេសកម្ពុជា និងអន្តរជាតិ ដោយទទួលបានជ័យជំនះយ៉ាងច្រើនសន្ធឹកសន្ធាប់។</p>
+                
+                <p>ក្រុមយើងខ្ញុំមានគោលបំណងជួយដល់យុវជនកម្ពុជាក្នុងការអភិវឌ្ឍជំនាញ E-sport និងបង្កើនការយល់ដឹងអំពីវិជ្ជាអភិវឌ្ឍន៍ខ្លួនឯង។ ក្រុមយើងខ្ញុំជឿជាក់ថា E-sport គឺជាផ្នែកមួយដ៏សំខាន់ក្នុងការអភិវឌ្ឍវិស័យកីឡានៅកម្ពុជា។</p>
+                
+                <div class="hero-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="feature-title">ជ័យជំនះ</h3>
+                        <p class="feature-desc">បានឈ្នះការប្រកួតជាច្រើនក្នុងតំបន់ និងអន្តរជាតិ</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">ក្រុមគ្រប់គ្រង</h3>
+                        <p class="feature-desc">មានក្រុមគ្រប់គ្រងដែលមានបទពិសោធន៍ខ្ពស់</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <h3 class="feature-title">តំណាងជាតិ</h3>
+                        <p class="feature-desc">តំណាងឲ្យប្រទេសកម្ពុជាក្នុងព្រឹត្តិការណ៍អន្តរជាតិ</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="feature-title">ល្បឿនលឿន</h3>
+                        <p class="feature-desc">ល្បឿនលេងលឿន យុទ្ធសាស្ត្រច្នៃប្រឌិត</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">អំពីក្រុម</h2>
+            <div class="about-team">
+                <div class="team-history">
+                    <h3>ប្រវត្តិក្រុម</h3>
+                    <p>ក្រុម Zero Trace ត្រូវបានបង្កើតឡើងនៅឆ្នាំ 2025 ដោយអ្នកលេងវ័យក្មេងចំនួន 5 នាក់ដែលមានចំណង់ចំណូលចិត្តលេងកម្មវិធី E-sport។ ក្រុមយើងខ្ញុំបានចាប់ផ្តើមពីការប្រកួតតូចៗ ហើយបន្តិចម្តងៗបានក្លាយជាក្រុមដែលទទួលបានការទទួលស្គាល់ជាតិ និងអន្តរជាតិ។</p>
+                    <p>ក្រោយមក ក្រុមយើងខ្ញុំបានទទួលជំនួយពីអ្នកឧបត្ថម្ភ ហើយបានចូលរួមការប្រកួត E-sport ធំៗជាច្រើននៅក្នុងប្រទេសកម្ពុជា និងតំបន់។</p>
+                </div>
+                <div class="achievements">
+                    <h3>សមិទ្ធផលសំខាន់ៗ</h3>
+                    <ul>
+                        <li>ឈ្នះការប្រកួត MLBB Cambodia Championship 2023</li>
+                        <li>អ្នកតំណាងជាតិកម្ពុជានៅ SEA Games 2023</li>
+                        <li>ឈ្នះការប្រកួត MLBB Khmer New Year Tournament 2024</li>
+                        <li>ចំណាត់ថ្នាក់លេខ 3 នៅការប្រកួតអន្តរជាតិ 3 ដង</li>
+                        <li>ជាក្រុមកំពូលចំនួន 10 នៅក្នុងចំណាត់ថ្នាក់កម្ពុជា</li>
+                        <li>បានទទួលពានរង្វាន់ជាច្រើនពីស្ថាប័នជាតិ និងអន្តរជាតិ</li>
+                        <li>អ្នកលេងក្រុមបានទទួលពានរង្វាន់អ្នកលេងល្អឆ្នើម</li>
+                        <li>ទាំងអស់នេះចេះតែនិយាយអោយបានទេ</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="players">
+            <h2 class="section-title">Player</h2>
+            <div class="players-grid">
+                <!-- Player 1 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play1.jpg" alt="Player 1" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">GR1FF1N</h3>
+                        <div class="player-role">អ្នកដឹកនាំក្រុម</div>
+                        <p class="player-desc">ជាអ្នកដឹកនាំក្រុមដ៏មានសមត្ថភាពខ្ពង់ខ្ពស់ និងមានបទពិសោធន៍ក្នុងការគ្រប់គ្រងស្ថានភាពល្បឿនលឿន។ គាត់ត្រូវបានគេស្គាល់ថាជាអ្នកលេងយុទ្ធសាស្ត្រដ៏វៃឆ្លាត។</p>
+                    </div>
+                </div>
+                
+                <!-- Player 2 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play5.jpg" alt="Player 2" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">KING YEAN</h3>
+                        <div class="player-role">EXP Land</div>
+                        <p class="player-desc">ជាអ្នកវាយប្រហារដ៏ឆ្នើមដែលមានល្បឿនលឿន និងការឆ្លើយតបភ្លាមៗ។ គាត់គឺជាកម្លាំងសំខាន់នៅពេលវាយប្រហារសត្រូវ។</p>
+                    </div>
+                </div>
+                
+                <!-- Player 3 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play2.jpg" alt="Player 3" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">SANO FURY</h3>
+                        <div class="player-role">TANK</div>
+                        <p class="player-desc">ជាអ្នកការពារក្រុមដ៏រឹងមាំ ដែលតែងតែនៅជួរខាងមុខក្នុងការពារសមាជិកក្រុម។ គាត់មានភាពរឹងមាំ និងភាពអត់ធ្មត់ខ្ពស់។</p>
+                    </div>
+                </div>
+                
+                <!-- Player 4 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play4.jpg" alt="Player 4" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">Benzzzz</h3>
+                        <div class="player-role">Gold Land</div>
+                        <p class="player-desc">ជាអ្នកលេងដែលប្រើប្រាស់តួអង្គដែលវាយប្រហារពីចម្ងាយ និងមានភាពជាក់លាក់ខ្ពស់។ គាត់គឺជាអ្នកគ្រប់គ្រងផ្លូវដ៏ល្អបំផុតនៅក្នុងក្រុម។</p>
+                    </div>
+                </div>
+                
+                <!-- Player 5 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play3.jpg" alt="Player 5" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">Veasnakara</h3>
+                        <div class="player-role">Mid Land</div>
+                        <p class="player-desc">ជាអ្នកប្រើប្រាស់ហេរ៉ូMageដែលមានភាពឈ្លៀសវ៉ៃ។ គាត់គឺជាអ្នកដែលអាចប្រែក្លាយស្ថានភាពគ្រោះថ្នាក់ឲ្យក្លាយជាឱកាស។</p>
+                    </div>
+                </div>
+                 <!-- Player 6 -->
+                <div class="player-card">
+                    <div class="player-img">
+                        <img src="image/play7.jpg" alt="Player 5" class="player-photo">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">Phantra</h3>
+                        <div class="player-role">Subplayer</div>
+                        <p class="player-desc">ជាអ្នកដែលអាចលេងបានច្រើនតួនាទិ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="structure">
+            <h2 class="section-title">រចនាសម្ព័ន្ធក្រុម</h2>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <div style="background: rgba(10, 92, 54, 0.3); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h3 style="color: var(--secondary); font-family: 'Bayon', sans-serif; margin-bottom: 1.2rem; font-size: 1.4rem;">រចនាសម្ព័ន្ធក្រុម Zero Trace</h3>
+                    <p style="margin-bottom: 1.5rem; text-align: left;">ក្រុមយើងខ្ញុំមានរចនាសម្ព័ន្ធដ៏រឹងមាំដែលផ្តល់នូវការគាំទ្រពេញលេញដល់អ្នកលេង។ ក្រុមគ្រប់គ្រងរបស់យើងខ្ញុំគឺជាអ្នកដែលមានបទពិសោធន៍ខ្ពស់ក្នុងវិស័យ E-sport និងមានចំណេះដឹងជ្រៅជ្រះអំពីការគ្រប់គ្រងក្រុម។</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-top: 1.5rem;">
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 1.2rem; border-radius: 8px; border-left: 3px solid var(--secondary);">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.6rem;">ក្រុមដឹកនាំ</h4>
+                            <p style="font-size: 0.9rem;">ទទួលខុសត្រូវលើការគ្រប់គ្រងយុទ្ធសាស្ត្រក្រុម និងការសម្រេចចិត្តសំខាន់ៗ។ ពួកគេគឺជាអ្នកដែលចាត់ចែងគ្រប់ផ្នែកនៃការប្រកួត។</p>
+                        </div>
+                        
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 1.2rem; border-radius: 8px; border-left: 3px solid var(--secondary);">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.6rem;">ក្រុមអ្នកលេង</h4>
+                            <p style="font-size: 0.9rem;">ជាកម្លាំងសំខាន់ដែលចូលរួមប្រកួត និងបង្ហាញសមត្ថភាពក្នុងការឈ្នះការប្រកួត។ ពួកគេបានឆ្លងកាត់ការហ្វឹកហ្វឺនយ៉ាងតឹងរ៉ឹង។</p>
+                        </div>
+                        
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 1.2rem; border-radius: 8px; border-left: 3px solid var(--secondary);">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.6rem;">ក្រុមគាំទ្រ</h4>
+                            <p style="font-size: 0.9rem;">ទទួលខុសត្រូវលើការគាំទ្រផ្នែកបច្ចេកទេស សុខភាព និងផ្នែកផ្សេងៗទៀតដើម្បីធានាថាអ្នកលេងអាចប្រតិបត្តិការបានល្អបំផុត។</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">ទំនាក់ទំនង</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p style="margin-bottom: 1.5rem; text-align: center; font-size: 1.1rem;">សូមទំនាក់ទំនងមកកាន់ក្រុមយើងខ្ញុំតាមរយៈជំហានខាងក្រោម</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div style="background: rgba(10, 92, 54, 0.3); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
+                        <div class="contact-item" style="justify-content: center;">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(10, 92, 54, 0.3); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
+                        <div class="contact-item" style="justify-content: center;">
+                            <i class="fab fa-facebook-messenger contact-icon"></i>
+                            <div>
+                                <h3 style="color: var(--secondary); margin-bottom: 0.2rem;">Facebook</h3>
+                                <p>Zero Trace  </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(10, 92, 54, 0.3); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
+                        <div class="contact-item" style="justify-content: center;">
+                            <i class="fas fa-phone-alt contact-icon"></i>
+                            <div>
+                                <h3 style="color: var(--secondary); margin-bottom: 0.2rem;">ទូរស័ព្ទ</h3>
+                                <p>+855 96 7638 575</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>អំពីយើង</h3>
+                <p>ក្រុម Zero Trace ជាក្រុមអ្នកលេង Mobile Legends ដែលមានសមត្ថភាពខ្ពស់ពីកម្ពុជា ដែលត្រូវបានទទួលស្គាល់ជាទូទៅថាជាក្រុមជំនាន់ថ្មីដែលមានសក្តានុពលយ៉ាងខ្លាំងក្លា។ ក្រុមយើងខ្ញុំបានចូលរួមការប្រកួតជាច្រើននៅក្នុងប្រទេសកម្ពុជា និងអន្តរជាតិ ដោយទទួលបានជ័យជំនះយ៉ាងច្រើនសន្ធឹកសន្ធាប់។</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>តំណភ្ជាប់</h3>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> ទំព័រដើម</a></li>
+                    <li><a href="#players"><i class="fas fa-chevron-right"></i> អ្នកលេង</a></li>
+                    <li><a href="#structure"><i class="fas fa-chevron-right"></i> រចនាសម្ព័ន្ធ</a></li>
+                    <li><a href="#contact"><i class="fas fa-chevron-right"></i> ទំនាក់ទំនង</a></li>
+                    <li><a href="id card.html"><i class="fas fa-chevron-right"></i> បង្កើតកាត</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ទំនាក់ទំនង</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <span>កំពត, កម្ពុជា</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <span>
+                    </span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone contact-icon"></i>
+                    <span>+855 12 345 678</span>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Zero Trace MLBB Cambodia Team. រក្សាសិទ្ធិគ្រប់យ៉ាង។
+        </div>
+    </footer>
+
+    <script>
+        // Access Code Validation
+        const validCodes = [
+            "ZT-CO-2025-6H7P2A9B",
+            "ZT-CO-2025-5B8G4X9Y",
+            "ZT-CO-2025-2C6H1Z8P",
+            "ZT-CO-2025-7D9J3M5Q",
+            "ZT-CO-2025-3E4N6T7V",
+            "ZT-CO-2025-8F2L9W4X",
+            "ZT-CO-2025-1G5K8R3S",
+            "ZT-CO-2025-4J3M6C8D",
+            "ZT-CO-2025-K9P2R4W",
+            "ZT-CO-2025-X7B8M1Q"
+        ];
+
+        const gateForm = document.querySelector('.gate-form');
+        const accessInput = document.querySelector('.access-input');
+        const errorMessage = document.querySelector('.error-message');
+        const accessGate = document.querySelector('.access-gate');
+
+        // Auto focus on access input
+        window.addEventListener('load', () => {
+            accessInput.focus();
+        });
+
+        gateForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const enteredCode = accessInput.value.trim().toUpperCase();
+            
+            if (validCodes.includes(enteredCode)) {
+                accessGate.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // Save access in localStorage
+                localStorage.setItem('zt-access', 'granted');
+            } else {
+                errorMessage.style.display = 'block';
+                accessInput.style.borderColor = '#ff6b6b';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                    accessInput.style.borderColor = 'var(--primary)';
+                }, 3000);
+            }
+        });
+
+        // Check if access was previously granted
+        if (localStorage.getItem('zt-access') === 'granted') {
+            accessGate.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('show');
+            this.querySelector('i').classList.toggle('fa-bars');
+            this.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                hamburger.querySelector('i').classList.add('fa-bars');
+                hamburger.querySelector('i').classList.remove('fa-times');
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active class
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+                
+                // Close mobile menu after selection
+                if (navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                    hamburger.querySelector('i').classList.add('fa-bars');
+                    hamburger.querySelector('i').classList.remove('fa-times');
+                }
+            });
+        });
+
+        // Add touch effects to buttons
+        const buttons = document.querySelectorAll('button, .submit-btn, .social-icon, .footer-links a');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', () => {
+                button.style.transform = 'scale(0.95)';
+            });
+            
+            button.addEventListener('touchend', () => {
+                button.style.transform = '';
+            });
+        });
+
+        // Performance optimizations for animations
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (Math.abs(currentScroll - lastScrollTop) > 50) {
+                // Throttle scroll events
+                lastScrollTop = currentScroll;
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>

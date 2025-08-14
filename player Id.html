@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trace - ប្រព័ន្ធគ្រប់គ្រងសមាជិក</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* រចនាប័ទ្មថ្មីសម្រាប់ក្បាលទំព័រ */
+        .main-header {
+            background: linear-gradient(90deg, #0c1e26, #1a3646);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(77, 184, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0d2b4e, #00c6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
+        }
+
+        .logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .team-name {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #4db8ff, #66ffcc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 242, 254, 0.3);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            color: #e6f7ff;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .nav-btn:hover {
+            color: #0c1e26;
+        }
+
+        .nav-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(to right, #4db8ff, #66ffcc);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover:before {
+            width: 100%;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(to right, #4db8ff, #66ffcc);
+            color: #0c1e26;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 35px;
+            height: 25px;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: #4db8ff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* រចនាប័ទ្មដើម */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Khmer', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1e26, #152a35, #1a3646);
+            color: #e6f7ff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Noto Sans Khmer', sans-serif;
+            padding-top: 100px;
+        }
+        
+        .container.page-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header.page-title {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            position: relative;
+            border-bottom: 2px solid rgba(77, 184, 255, 0.3);
+        }
+        
+        .logo-container.page-logo {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .custom-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0f4c75, #1b6ca8);
+            box-shadow: 0 0 40px rgba(27, 108, 168, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #4db8ff;
+            transition: all 0.5s ease;
+        }
+        
+        .custom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+        
+        .custom-logo:hover {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 0 50px rgba(77, 184, 255, 0.9);
+        }
+        
+        .logo-shine {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(77,184,255,0.4) 0%, rgba(77,184,255,0) 70%);
+            z-index: -1;
+            animation: shine 6s infinite linear;
+        }
+        
+        @keyframes shine {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.4; }
+        }
+        
+        h1.page-title-text {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #4db8ff, #66ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        h1.page-title-text::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4db8ff, #66ffcc, transparent);
+            border-radius: 50%;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 15px auto 0;
+            line-height: 1.6;
+            color: #a8d8ff;
+            padding: 0 15px;
+            position: relative;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .security-badge {
+            display: inline-block;
+            background: rgba(255, 102, 0, 0.15);
+            color: #ffcc66;
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 20px;
+            padding: 8px 18px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .security-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 204, 102, 0.3), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .security-badge:hover::before {
+            left: 100%;
+        }
+        
+        .card {
+            background: rgba(16, 42, 58, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(77, 184, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4db8ff, #66ffcc, #4db8ff);
+            opacity: 0.3;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #4db8ff;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(77, 184, 255, 0.2);
+            justify-content: center;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+            color: #66ffcc;
+        }
+        
+        .info-box {
+            background: rgba(22, 52, 71, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4db8ff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4db8ff, #66ffcc);
+        }
+        
+        .info-box h3 {
+            color: #66ffcc;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .info-box p {
+            line-height: 1.6;
+            color: #cce6ff;
+            padding-left: 30px;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            background: linear-gradient(90deg, #0062cc, #0099cc);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+            min-width: 220px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.6);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-download {
+            background: linear-gradient(90deg, #009933, #00cc66);
+            box-shadow: 0 4px 15px rgba(0, 153, 51, 0.4);
+        }
+        
+        .btn-print {
+            background: linear-gradient(90deg, #ff6600, #ff9900);
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+        }
+        
+        .btn-upload {
+            background: linear-gradient(90deg, #9900cc, #cc00ff);
+            box-shadow: 0 4px 15px rgba(153, 0, 204, 0.4);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(22, 52, 71, 0.5);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+            background: transparent;
+        }
+        
+        th, td {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(77, 184, 255, 0.2);
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        th {
+            background: rgba(15, 95, 140, 0.6);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #66ffcc;
+            position: relative;
+        }
+        
+        th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #4db8ff, #66ffcc);
+            opacity: 0.4;
+        }
+        
+        tr:hover {
+            background: rgba(77, 184, 255, 0.15);
+        }
+        
+        .id-code {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #ffcc00;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px;
+        }
+        
+        .id-code::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 204, 0, 0.1);
+            border-radius: 4px;
+            z-index: -1;
+        }
+        
+        .member-type {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .core {
+            background: rgba(0, 153, 51, 0.2);
+            color: #66ff99;
+        }
+        
+        .fixed-note {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #ff9966;
+            font-size: 0.95rem;
+            padding: 15px;
+            background: rgba(255, 153, 102, 0.1);
+            border-radius: 8px;
+            position: relative;
+            border: 1px dashed rgba(255, 153, 102, 0.3);
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #88aabb;
+            border-top: 1px solid rgba(77, 184, 255, 0.2);
+            position: relative;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4db8ff, transparent);
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            padding-left: 50px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(22, 52, 71, 0.7);
+            color: #e6f7ff;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(77, 184, 255, 0.2);
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(77, 184, 255, 0.5);
+            background: rgba(22, 52, 71, 0.9);
+            border: 1px solid rgba(77, 184, 255, 0.5);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4db8ff;
+            font-size: 1.2rem;
+        }
+        
+        .search-hint {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #88aabb;
+            opacity: 0.8;
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
+        
+        /* កែសម្រួលសម្រាប់ឧបករណ៍ចល័ត */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                display: none;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                right: 0;
+                background: #152a35;
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+            }
+            
+            .nav-buttons.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+            
+            h1.page-title-text {
+                font-size: 1.8rem;
+            }
+            
+            .logo-container.page-logo {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .custom-logo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .id-code {
+                font-size: 0.85rem;
+            }
+            
+            .info-box {
+                padding: 15px;
+            }
+            
+            .info-box p {
+                padding-left: 15px;
+                font-size: 0.9rem;
+            }
+            
+            body {
+                padding-top: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1.page-title-text {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                min-width: auto;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+                font-size: 0.8rem;
+            }
+            
+            .id-code {
+                font-size: 0.75rem;
+            }
+            
+            .search-input {
+                padding: 12px 16px;
+                padding-left: 40px;
+                font-size: 0.9rem;
+            }
+            
+            .search-icon {
+                left: 15px;
+                font-size: 1rem;
+            }
+            
+            .info-box h3 {
+                font-size: 1rem;
+            }
+            
+            .info-box p {
+                font-size: 0.85rem;
+                padding-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ក្បាលទំព័រថ្មីដែលស្ថិតនៅលើគេ -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="image/1.jpg" alt="Zero Trace Logo">
+                    </div>
+                    <h1 class="team-name">ZERO TRACE</h1>
+                </div>
+                
+                <!-- ទំនាក់ទំនងសម្រាប់កុំព្យូទ័រ -->
+                <div class="nav-buttons" id="navButtons">
+                    <a href="index.html" class="nav-btn">Home</a>
+                    <a href="player Id.html" class="nav-btn active">Players ID</a>
+                    <a href="team.html" class="nav-btn">Team Structure</a>
+                    <a href="Law.html" class="nav-btn">Law</a>
+                    <a href="Lederteam.html" class="nav-btn">Lederteam</a>
+                    <a href="#contact" class="nav-btn">Contact</a>
+                </div>
+                
+                <!-- ម៉ឺនុយហាំបឺហ្គឺសម្រាប់ទូរស័ព្ទ -->
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container page-content">
+        <header class="page-title">
+            <div class="logo-container page-logo">
+                <div class="logo-shine"></div>
+                <div class="custom-logo">
+                    <img id="customLogoImg" src="image/1.jpg" alt="Zero Trace Logo">
+                </div>
+            </div>
+            <h1 class="page-title-text">ZERO TRACE MEMBER SYSTEM</h1>
+            <p class="subtitle">ប្រព័ន្ធគ្រប់គ្រងលេខសម្គាល់សមាជិកក្រុម ដោយគោរពគោលការណ៍ក្រុម និងសុវត្ថិភាព</p>
+            <div class="security-badge">
+                <i class="fas fa-lock"></i> លេខសម្គាល់សមាជិក - មិនអាចផ្លាស់ប្តូរ
+            </div>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-user-secret"></i> ព័ត៌មានលេខសម្គាល់សមាជិក</h2>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="search-input" placeholder="ស្វែងរកសមាជិកដោយឈ្មោះ ឬលេខសម្គាល់...">
+                    </div>
+                </div>
+                <p class="search-hint">វាយឈ្មោះ ឬលេខសម្គាល់ដើម្បីស្វែងរកសមាជិកក្រុម</p>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> ព័ត៌មានអំពីប្រព័ន្ធ</h3>
+                    <p>លេខសម្គាល់សមាជិកទាំងអស់ត្រូវបានបង្កើតដោយយកចិត្ត និងថេរជារៀងរហូត។ លេខសម្គាល់មិនអាចផ្លាស់ប្តូរបានដោយសារតែគោលការណ៍សុវត្ថិភាពរបស់ក្រុម Zero Trace។ លេខសម្គាល់មួយចំនួនអាចមើលឃើញខាងក្រោម៖</p>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-download" id="downloadBtn">
+                        <i class="fas fa-download"></i> ទាញយកទិន្នន័យ CSV
+                    </button>
+                    <button class="btn btn-print" id="printBtn">
+                        <i class="fas fa-print"></i> បោះពុម្ពឯកសារ
+                    </button>
+                    <button class="btn btn-upload" id="applyImageBtn">
+                        <i class="fas fa-check-circle"></i> អនុវត្តរូបភាព
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="membersTable">
+                        <thead>
+                            <tr>
+                                <th>ល.រ</th>
+                                <th>ឈ្មោះសមាជិក</th>
+                                <th>លេខសម្គាល់</th>
+                                <th>ប្រភេទ</th>
+                                <th>ឆ្នាំចូល</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membersBody">
+                            <!-- ទិន្នន័យសមាជិកនឹងត្រូវបញ្ចូលនៅទីនេះ -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="fixed-note">
+                    <i class="fas fa-exclamation-triangle"></i> សម្គាល់៖ លេខសម្គាល់ទាំងអស់ជាលេខចៃដន្យថេរ មិនអាចផ្លាស់ប្តូរបានដើម្បីធានាសុវត្ថិភាព
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>ប្រព័ន្ធគ្រប់គ្រងសមាជិកក្រុម Zero Trace | ការអភិវឌ្ឍន៍ដោយក្រុមបច្ចេកទេស ZT</p>
+            <p>គោលការណ៍ឯកជនភាព៖ លេខសម្គាល់ទាំងអស់ត្រូវបានបង្កើតដោយយកចិត្តទុកដាក់ និងថេរជារៀងរហូត</p>
+        </footer>
+    </div>
+
+    <script>
+        // មុខងារសម្រាប់បើក/បិទម៉ឺនុយហាំបឺហ្គឺ
+        const hamburger = document.getElementById('hamburger');
+        const navButtons = document.getElementById('navButtons');
+        
+        hamburger.addEventListener('click', () => {
+            navButtons.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // ទិន្នន័យសមាជិកជាមួយលេខសម្គាល់ចៃដន្យថេរ (ដោយបានលុប Jeremy ចេញ)
+        const members = [
+            { id: 1, name: "Phantra", memberID: "ZT-CO-2025-5B8G4X9Y" },
+            { id: 2, name: "King Yean", memberID: "ZT-CO-2025-2C6H1Z8P" },
+            { id: 3, name: "Benzzz", memberID: "ZT-CO-2025-7D9J3M5Q" },
+            { id: 4, name: "Vasnakara", memberID: "ZT-CO-2025-3E4N6T7V" },
+            { id: 5, name: "SanoFury", memberID: "ZT-CO-2025-8F2L9W4X" },
+            { id: 6, name: "YaSAKi", memberID: "ZT-CO-2025-6H7P2A9B" },
+            { id: 7, name: "សមាជិក 9", memberID: "ZT-CO-2025-4J3M6C8D" }
+        ];
+        
+        // មុខងារបញ្ចូលទិន្នន័យទៅក្នុងតារាង
+        function populateTable(data = members) {
+            const tbody = document.getElementById('membersBody');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #ff9966;">
+                            <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                            <div>គ្មានទិន្នន័យត្រូវគ្នានឹងការស្វែងរក</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            data.forEach((member, index) => {
+                const row = document.createElement('tr');
+                
+                // ប្រើលេខរៀងថ្មីដោយផ្អែកលើលំដាប់ក្នុងអារេ
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${member.name}</td>
+                    <td class="id-code">${member.memberID}</td>
+                    <td><span class="member-type core">Core</span></td>
+                    <td>2025</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // មុខងារស្វែងរកសមាជិក
+        function filterMembers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                populateTable();
+                return;
+            }
+            
+            const filteredMembers = members.filter(member => 
+                member.name.toLowerCase().includes(searchTerm) || 
+                member.memberID.toLowerCase().includes(searchTerm)
+            );
+            
+            populateTable(filteredMembers);
+        }
+        
+        // មុខងារទាញយក CSV
+        function downloadCSV() {
+            let csvContent = "ល.រ,ឈ្មោះសមាជិក,លេខសម្គាល់,ប្រភេទ,ឆ្នាំចូល\n";
+            
+            members.forEach((member, index) => {
+                csvContent += `${index + 1},${member.name},${member.memberID},Core,2025\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'zero_trace_members.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // បង្ហាញសារជោគជ័យ
+            alert('ទិន្នន័យ CSV ត្រូវបានទាញយកដោយជោគជ័យ!');
+        }
+        
+        // មុខងារបោះពុម្ពឯកសារ
+        function printDocument() {
+            window.print();
+        }
+        
+        // ចាប់ផ្តើមទំព័រ
+        document.addEventListener('DOMContentLoaded', () => {
+            populateTable();
+            
+            // កំណត់អ្នកស្តាប់
+            document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
+            document.getElementById('printBtn').addEventListener('click', printDocument);
+            document.getElementById('searchInput').addEventListener('input', filterMembers);
+            
+            // កំណត់អ្នកស្តាប់សម្រាប់គ្រាប់ចុច Enter
+            document.getElementById('searchInput').addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    filterMembers();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

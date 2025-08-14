@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ក្រុម E-Sport Zero Trace - ច្បាប់ និងគោលការណ៍គ្រឹះ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&family=Koulen&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a237e;
+            --secondary: #b71c1c;
+            --accent: #ffd600;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hanuman', serif;
+            background: linear-gradient(135deg, #f5f5f5, #e8f5e9);
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0,0,0,0.03)" stroke-width="1"/></svg>');
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-name {
+            font-family: 'Koulen', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .team-name span {
+            color: var(--accent);
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-list li a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Koulen', sans-serif;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-list li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-list li a.active {
+            background: var(--accent);
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .nav-list li a.active:hover {
+            background: #ffc107;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .page-title h1 {
+            font-family: 'Koulen', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .slogan {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            font-family: 'Koulen', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        /* Rules Section */
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .rules-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .rules-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-header {
+            background: linear-gradient(to right, var(--primary), #283593);
+            color: white;
+            padding: 1rem 1.5rem;
+            font-family: 'Koulen', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+        
+        .section-content {
+            padding: 1.5rem;
+        }
+        
+        .rule-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--border);
+        }
+        
+        .rule-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .rule-title {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rule-title::before {
+            content: "•";
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        
+        .rule-details {
+            padding-left: 1.5rem;
+            color: #444;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-title {
+            font-family: 'Koulen', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Khmer Patterns */
+        .khmer-pattern {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .pattern-1 {
+            top: 20%;
+            left: 5%;
+            font-size: 8rem;
+            transform: rotate(-15deg);
+        }
+        
+        .pattern-2 {
+            bottom: 10%;
+            right: 5%;
+            font-size: 10rem;
+            transform: rotate(10deg);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .nav-list {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+            
+            .nav-list.active {
+                display: flex;
+            }
+            
+            .nav-list li {
+                width: 100%;
+            }
+            
+            .nav-list li a {
+                display: block;
+                padding: 12px 20px;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .team-name {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            
+            .slogan {
+                font-size: 1rem;
+            }
+            
+            .rules-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Khmer Decorative Patterns -->
+    <div class="khmer-pattern pattern-1">ខ្មែរ</div>
+    <div class="khmer-pattern pattern-2">ខេមរយាន</div>
+    
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <!-- រូបភាពឡូហ្គោថ្មី -->
+                    <img src="image/1.jpg" alt="Zero Trace Logo">
+                </div>
+                <div class="team-name">ZERO <span>TRACE</span></div>
+            </div>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">ទំព័រដើម</a></li>
+                    <li><a href="player Id.html">សមាជិកក្រុម</a></li>
+                    <li><a href="Law.html" class="active">ច្បាប់ក្រុម</a></li>
+                    <li><a href="contact.html">ទំនាក់ទំនង</a></li>
+                    <li><a href="team.html">រចនាសម្ព័ន្ធ</a></li>
+                    <li><a href="Lederteam.html">ក្រុមដឹកនាំ</a></li>
+                </ul>
+                <button class="hamburger">☰</button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h1>ច្បាប់ និងគោលការណ៍គ្រឹះ</h1>
+            <div class="slogan">"ពីសូន្យ ដល់ការតាមដាន" ✊</div>
+        </div>
+        
+        <!-- Rules Sections -->
+        <div class="rules-container">
+            <!-- Core Values -->
+            <div class="rules-section">
+                <div class="section-header">I. គោលការណ៍ជាមូលដ្ឋាន (Core Values)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-title">សម្របសម្រួលក្រុម (Team First)</div>
+                        <div class="rule-details">រាល់សកម្មភាព ការសម្រេចចិត្ត និងយុទ្ធសាស្ត្រត្រូវធ្វើឡើងដើម្បីផលប្រយោជន៍ក្រុម។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ភាពជាវិជ្ជាជីវៈ (Professionalism)</div>
+                        <div class="rule-details">គោរពពេលវេលា សម្របសម្រួលគ្នាក្នុងការហ្វឹកហាត់/ប្រកួត និងរក្សាសីលធម៌។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ការលូតលាស់ឥតឈប់ឈរ (Continuous Improvement)</div>
+                        <div class="rule-details">ទទួលយកការរិះគន់ វិភាគកំហុស និងខិតខំពង្រឹងសមត្ថភាព។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ស្មារតីកីឡា (Sportsmanship)</div>
+                        <div class="rule-details">គោរពគូប្រកួត អ្នកគ្រប់គ្រង និងអ្នកគាំទ្រ ទាំងពេលឈ្នះ និងចាញ់។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Player Rules -->
+            <div class="rules-section">
+                <div class="section-header">II. ច្បាប់សម្រាប់សមាជិក (Player Rules)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-title">វត្តមាន និងពេលវេលា (Attendance & Punctuality)</div>
+                        <div class="rule-details">មកដល់មុនពេលហ្វឹកហាត់/ប្រកួត 15 នាទី។<br>សុំអនុញ្ញាតជាមុន បើមិនអាចចូលរួម (យ៉ាងហោច 24 ម៉ោងមុន)។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">សម្ភារៈប្រកួត (Gear & Setup)</div>
+                        <div class="rule-details">រៀបចំឧបករណ៍ (ទូរស័ព្ទ/PC, អ៊ីនធឺណិត, ក្បាលសំឡេង) ឲ្យបានត្រឹមត្រូវ។<br>ហាមដោយច្បាស់ការប្រើហ្វេក (hack) ឬកម្មវិធីបំភាន់។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ឥរិយាបថក្នុងហ្គេម (In-Game Conduct)</div>
+                        <div class="rule-details">គ្មានការជេីឡឹង (toxicity) ជេីច (trash talk) ឬជេីដំ (bullying)។<br>គោរពការសម្រេចចិត្តរបស់អ្នកដឹកនាំក្រុម (Captain/Coach)។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ការរក្សាសវនកម្ម (Confidentiality)</div>
+                        <div class="rule-details">ហាមចែកចាយយុទ្ធសាស្ត្រ ឬព័ត៌មានផ្ទៃក្នុងរបស់ក្រុមទៅក្រៅ។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Management Structure -->
+            <div class="rules-section">
+                <div class="section-header">III. រចនាសម្ព័ន្ធគ្រប់គ្រង (Management Structure)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-title">អ្នកគ្រប់គ្រងក្រុម (Team Manager)</div>
+                        <div class="rule-details">ទំនាក់ទំនងជាមួយអង្គការ រៀបចំប្រកួត និងដោះស្រាយបញ្ហារដ្ឋបាល។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">អ្នកចាត់ការ (Coach)</div>
+                        <div class="rule-details">កំណត់យុទ្ធសាស្ត្រ វាយតម្លៃសមត្ថភាពសមាជិក និងដឹកនាំហ្វឹកហាត់។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">មេក្រុម (Captain)</div>
+                        <div class="rule-details">ដឹកនាំក្រុមក្នុងហ្គេម ធ្វើជាអ្នកនិយាយផ្លូវការនៅពេលប្រកួត។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">សមាជិក (Players)</div>
+                        <div class="rule-details">ចូលរួមហ្វឹកហាត់/ប្រកួតឱ្យបានទៀងទាត់ និងគោរពគោលការណ៍។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Financial Principles -->
+            <div class="rules-section">
+                <div class="section-header">IV. គោលការណ៍ហិរញ្ញវត្ថុ (Financial Principles)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-title">ការចែករំលែកប្រាក់រង្វាន់ (Prize Pool Distribution)</div>
+                        <div class="rule-details">
+                            70% ទៅសមាជិកក្រុម (ចែកតាមការយល់ព្រមគ្នា)។<br>
+                            20% ទៅការវិនិយោគក្រុម (ឧបករណ៍ កម្មវិធីហ្វឹកហាត់)។<br>
+                            10% សម្រាប់ថ្លៃដើមប្រតិបត្តិការ (ដូចជា អ្នកគ្រប់គ្រង/អ្នកចាត់ការ)។
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">គ្រឿងឥស្សរិយយស (Sponsorships)</div>
+                        <div class="rule-details">រាល់កិច្ចសហការជាមួយអ្នកឧបត្ថម្ភ ត្រូវតែមានការពិភាក្សាជាមួយសមាជិកទាំងអស់ជាមុន។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conflict Resolution -->
+            <div class="rules-section">
+                <div class="section-header">V. ការដោះស្រាយវិវាទ (Conflict Resolution)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-details">បញ្ហាផ្ទៃក្នុងត្រូវតែ ពិភាក្សាជាមួយអ្នកគ្រប់គ្រង/អ្នកចាត់ការ ជាមុនសិន។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">ការសម្រេចចិត្តចុងក្រោយធ្វើឡើងដោយ បោះឆ្នោតក្រុម (ដោយមានអ្នកគ្រប់គ្រងធ្វើជាអ្នកសម្របសម្រួល)។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">សមាជិកដែលបំពានច្បាប់ធ្ងន់ធ្ងរ អាចទទួលរង ការព្រមាន ការពិន័យហិរញ្ញវត្ថុ ឬចាកចេញពីក្រុម។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Development Plan -->
+            <div class="rules-section">
+                <div class="section-header">VI. ផែនការអភិវឌ្ឍន៍ (Development Plan)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-title">ការហ្វឹកហាត់ (Training)</div>
+                        <div class="rule-details">
+                            យ៉ាងហោច 5 ថ្ងៃ/សប្តាហ៍ (ម៉ោងហ្វឹកហាត់ត្រូវបានកំណត់ជាមុន)។<br>
+                            វិភាគ Replay ប្រកួតប្រចាំសប្តាហ៍។
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">ការវាយតម្លៃ (Evaluation)</div>
+                        <div class="rule-details">
+                            រៀបចំការវាយតម្លៃសមត្ថភាពរៀងរាល់ 3 ខែ។<br>
+                            សមាជិកថ្មីត្រូវឆ្លងកាត់ សំណាក់សាកល្បង (trial period) 1 ខែ។
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Public Relations -->
+            <div class="rules-section">
+                <div class="section-header">VII. ទំនាក់ទំនងសាធារណៈ (Public Relations)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-details">រាល់សមាជិកត្រូវថែរក្សា image វិជ្ជាជីវៈ នៅលើបណ្តាញសង្គម។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">ការប្រកាសព័ត៌មានផ្លូវការត្រូវធ្វើឡើងតាមរយៈ អ្នកគ្រប់គ្រងក្រុម។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">លើកកម្ពស់ស្មារតី គាំទ្រគ្នាទៅវិញទៅមក នៅក្នុងសហគមន៍ MLBB។</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exit & Recruitment -->
+            <div class="rules-section">
+                <div class="section-header">VIII. ការដកចេញ/ចាប់ផ្តើមឡើងវិញ (Exit & Recruitment)</div>
+                <div class="section-content">
+                    <div class="rule-item">
+                        <div class="rule-details">សមាជិកដែលចង់ឈប់ ត្រូវជូនដំណឹង យ៉ាងហោច 1 ខែមុន។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">សមាជិកថ្មីត្រូវជ្រើសតាមរយៈ សំណាក់សាកល្បង និងការយល់ព្រមពីសមាជិកទាំងអស់។</div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-details">ការដកចេញដោយមិនប្រាប់មុន អាចនាំឱ្យ បាត់បង់ផលប្រយោជន៍ហិរញ្ញវត្ថុ។</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 2rem 0; padding: 1.5rem; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+            <p style="font-size: 1.1rem; line-height: 1.7;">
+                <strong>គោលការណ៍ទាំងនេះគឺជា គោលដៅរបស់ Zero Trace ដើម្បីកសាងក្រុមដ៏រឹងមាំ មានគោលបំណងច្បាស់លាស់ និងគោរពគ្នាទៅវិញទៅមក។</strong><br>
+                រាល់សមាជិកត្រូវចុះហត្ថលេខាទទួលស្គាល់ និងគោរពឯកសារនេះ។
+            </p>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-title">អំពីក្រុម</div>
+                <p>ក្រុម E-Sport Zero Trace ជាក្រុមអេសភីអូដដ៏រឹងមាំក្នុងពិភពលោក MLBB នៅកម្ពុជា។ យើងខិតខំប្រឹងប្រែងដើម្បីលើកកម្ពស់វិស័យអេសភីអូដរបស់ប្រទេសកម្ពុជា។</p>
+            </div>
+            
+            <div class="footer-section">
+                <div class="footer-title">ទំនាក់ទំនង</div>
+                <div class="contact-info">
+                    <p>📧 Email: info@zerotrace-esport.com</p>
+                    <p>📱 Telegram: t.me/zerotrace_esport</p>
+                    <p>📞 Phone: +855 12 345 678</p>
+                    <p>🏢 Address: រាជធានីភ្នំពេញ, កម្ពុជា</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <div class="footer-title">បណ្តាញសង្គម</div>
+                <div class="contact-info">
+                    <p>📘 Facebook: fb.com/ZeroTraceEsport</p>
+                    <p>🎮 YouTube: youtube.com/ZeroTraceMLBB</p>
+                    <p>📸 Instagram: instagram.com/zerotrace_esport</p>
+                    <p>🎮 TikTok: tiktok.com/@zerotrace_esport</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 ក្រុម E-Sport Zero Trace. រក្សាសិទ្ធិគ្រប់យ៉ាង។ "ពីសូន្យ ដល់ការតាមដាន" ✊
+        </div>
+    </footer>
+    
+    <script>
+        // Hamburger menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navList = document.querySelector('.nav-list');
+        
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav') && navList.classList.contains('active')) {
+                navList.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

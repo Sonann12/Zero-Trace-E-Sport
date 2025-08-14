@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trace MLBB - ក្រុមអេស្ព័រ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@700;800&family=Noto+Sans+Khmer:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a1f38;
+            --secondary: #2d3561;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+        }
+        
+        body {
+            font-family: 'Noto Sans Khmer', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: rgba(10, 15, 30, 0.95);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            overflow: hidden;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-name {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--gold), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navigation Styles */
+        .nav-container {
+            display: flex;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: var(--light);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: rotate 15s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-title {
+            font-family: 'Kanit', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(to right, var(--gold), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: #d1d1d1;
+        }
+        
+        /* Candidates Section */
+        .candidates {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .candidate-card {
+            background: rgba(30, 35, 60, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+        }
+        
+        .candidate-header {
+            padding: 1.5rem;
+            background: rgba(20, 25, 50, 0.8);
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .candidate-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+        
+        .candidate-position {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .candidate-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid;
+            margin: -70px auto 1.5rem;
+            overflow: hidden;
+            background: var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .leader .candidate-image {
+            border-color: var(--gold);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        .deputy .candidate-image {
+            border-color: var(--silver);
+            box-shadow: 0 0 25px rgba(192, 192, 192, 0.5);
+        }
+        
+        .assistant .candidate-image {
+            border-color: var(--bronze);
+            box-shadow: 0 0 25px rgba(205, 127, 50, 0.5);
+        }
+        
+        .candidate-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .candidate-details {
+            padding: 1.5rem;
+            color: #e0e0e0;
+        }
+        
+        .candidate-role {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .candidate-quote {
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .role-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(10, 15, 30, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+        
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Team Stats Section */
+        .stats {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: rgba(20, 25, 50, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .stats-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stat-card {
+            background: rgba(30, 35, 60, 0.7);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(40, 45, 80, 0.8);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .nav-menu {
+                gap: 0.8rem;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 90px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(20, 25, 50, 0.95);
+                width: 70%;
+                height: calc(100vh - 90px);
+                padding: 2rem;
+                transition: right 0.4s ease;
+                backdrop-filter: blur(10px);
+                gap: 1.5rem;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                font-size: 1.2rem;
+                padding: 0.8rem;
+                display: block;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .candidate-card {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header-container {
+                padding: 0.8rem;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .team-name {
+                font-size: 1.5rem;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .candidates {
+                padding: 1rem;
+                gap: 2rem;
+            }
+            
+            .candidate-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .candidate-name {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="image/1.jpg" alt="Zero Trace Logo">
+                </div>
+                <div class="team-name">ZERO TRACE</div>
+            </div>
+            
+            <div class="nav-container">
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">ទំព័រដើម</a></li>
+                    <li><a href="player Id.html" class="nav-link">Player ID</a></li>
+                    <li><a href="team.html" class="nav-link">រចនាសម្ព័ន្ធក្រុម</a></li>
+                    <li><a href="contact.html" class="nav-link">ទំនាក់ទំនង</a></li>
+                    <li><a href="Law.html" class="nav-link">ក្រុមច្បាប់</a></li>
+                    <li><a href="Lederteam.html" class="nav-link">ក្រុមអ្នកដឹកនាំ</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">ZERO TRACE MLBB TEAM</h1>
+        <p class="hero-subtitle">ក្រុមអេស្ព័រដែលមានសក្តានុពលនិងមានភាពជោគជ័យបំផុតក្នុងប្រទេសកម្ពុជា។ យើងត្រៀមខ្លួនសម្រាប់ពានរង្វាន់អន្តរជាតិ!</p>
+    </section>
+
+    <!-- Team Stats -->
+    <div class="stats">
+        <h2 class="stats-title">ស្ថិតិក្រុម</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">85%</div>
+                <div class="stat-label">អត្រាឈ្នះ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">ពានរង្វាន់</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.5★</div>
+                <div class="stat-label">ការវាយតម្លៃ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4+</div>
+                <div class="stat-label">ឆ្នាំប្រតិបត្តិការ</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidates Section -->
+    <div class="candidates">
+        <!-- Leader -->
+        <div class="candidate-card leader">
+            <div class="candidate-header">
+                <h2 class="candidate-name">អ៊ូច សុណាន់</h2>
+                <p class="candidate-position">ប្រធានក្រុម</p>
+            </div>
+            <div class="candidate-image">
+                <img src="image/play1.jpg" alt="អ៊ូច សុណាន់">
+            </div>
+            <div class="candidate-details">
+                <p class="candidate-role">អ្នកលេងជំនាញវិជ្ជាជីវៈ</p>
+                <p class="candidate-quote">"ជោគជ័យមិនមែនចែកចាយដោយចៃដន្យទេ វាត្រូវបានរក្សាទុកសម្រាប់អ្នកដែលត្រៀមខ្លួនជាស្រេច"</p>
+            </div>
+            <div class="role-badge">ប្រធានក្រុម</div>
+        </div>
+        
+        <!-- Deputy Leader -->
+        <div class="candidate-card deputy">
+            <div class="candidate-header">
+                <h2 class="candidate-name">ម៉ាន់ វាសនា</h2>
+                <p class="candidate-position">អនុប្រធាន</p>
+            </div>
+            <div class="candidate-image">
+                <img src="image/play3.jpg" alt="ម៉ាន់ វាសនា">
+            </div>
+            <div class="candidate-details">
+                <p class="candidate-role">អ្នកគ្រប់គ្រងយុទ្ធសាស្ត្រ</p>
+                <p class="candidate-quote">"យើងមិនលេងដើម្បីបរាជ័យទេ យើងលេងដើម្បីឈ្នះ"</p>
+            </div>
+            <div class="role-badge">អនុប្រធាន</div>
+        </div>
+        
+        <!-- Assistant -->
+        <div class="candidate-card assistant">
+            <div class="candidate-header">
+                <h2 class="candidate-name">អូន យៀន</h2>
+                <p class="candidate-position">ជំនួយការ</p>
+            </div>
+            <div class="candidate-image">
+                <img src="image/play5.jpg" alt="អូន យៀន">
+            </div>
+            <div class="candidate-details">
+                <p class="candidate-role">អ្នកគ្រប់គ្រងប្រតិបត្តិការ</p>
+                <p class="candidate-quote">"សហការភាពគឺជាគន្លឹះឆ្ពោះទៅរកជោគជ័យគ្រប់យ៉ាង"</p>
+            </div>
+            <div class="role-badge">ជំនួយការ</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/588/588308.png" alt="Zero Trace Logo">
+            </div>
+            <h3 class="team-name">ZERO TRACE MLBB</h3>
+            <p>គ្រាប់ពេជ្រដ៏ឆ្នើមរបស់ប្រទេសកម្ពុជា</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-icon">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+            
+            <p class="copyright">© 2023 ZERO TRACE MLBB Team. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Change hamburger icon
+            const icon = hamburger.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Add animation to cards when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        // Apply animation to candidate cards
+        document.querySelectorAll('.candidate-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+        
+        // Apply animation to stats cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
